@@ -43,7 +43,8 @@ const gpx = new gpx( gpxContent );
 console.log( gpx.distance(), gpx.pace(), gpx.elevation(), gpx.distance() );
 ```
 
-## development
+## Development
+You need to have node and npm installed to be able to work on this code.
 
 ### Installation
 ```bash

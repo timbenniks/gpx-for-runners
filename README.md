@@ -9,7 +9,7 @@ This is a simple GPX parser for runners how want to parse their gpx files from N
 
 ## Examples
 ```js
-import GPX from 'gpx-for-runners';
+import gpx from 'gpx-for-runners';
 
 const gpxContent = `<?xml version="1.0" encoding="UTF-8"?>
 <gpx version="1.1" creator="Garmin Connect"
@@ -38,7 +38,7 @@ const gpxContent = `<?xml version="1.0" encoding="UTF-8"?>
   </trk>
 </gpx>`;
 
-const gpx = new gpx( gpxContent )
+const gpx = new gpx( gpxContent );
 
 console.log( gpx.distance(), gpx.pace(), gpx.elevation(), gpx.distance() );
 ```
@@ -46,23 +46,20 @@ console.log( gpx.distance(), gpx.pace(), gpx.elevation(), gpx.distance() );
 ## development
 
 ### Installation
-```
+```bash
 npm install
 ```
 
 ### How to run
 
 #### Tests
-```
+```bash
+// tests
 npm run test
-```
 
-#### Dev
-```
+//dev
 npm run dev
-```
 
-#### Build
-```
+//build
 npm run build
 ```

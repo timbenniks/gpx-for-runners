@@ -51,9 +51,7 @@ You need to have node and npm installed to be able to work on this code.
 npm install
 ```
 
-### How to run
-
-#### Tests
+### working with the code
 ```bash
 // tests
 npm run test

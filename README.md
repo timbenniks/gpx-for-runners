@@ -1,5 +1,5 @@
 # GPX parser for runners
-This is a simple GPX parser for runners how want to parse their gpx files from Nike+ or Garmin connect. The parser works as long as there are trackpoints in the GPX file.
+This is a simple GPX parser for runners who want to parse gpx files from Nike+, Garmin connect or any other running service. The parser works as long as there are trackpoints in the GPX file.
 
 ## Functions
 * Duration
@@ -46,12 +46,10 @@ console.log( gpx.distance(), gpx.pace(), gpx.elevation(), gpx.distance() );
 ## Development
 You need to have node and npm installed to be able to work on this code.
 
-### Installation
 ```bash
 npm install
 ```
 
-### Working with the code
 ```bash
 // tests
 npm run test

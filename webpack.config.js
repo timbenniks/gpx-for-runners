@@ -14,8 +14,6 @@ else {
   outputFile = libraryName + '.js';
 }
 
-plugins.push( new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en-gb /) );
-
 var config = {
   entry: __dirname + '/src/index.js',
   devtool: 'source-map',

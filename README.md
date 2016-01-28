@@ -54,9 +54,9 @@ npm install
 // tests
 npm run test
 
-//dev
+// dev
 npm run dev
 
-//build
+// build
 npm run build
 ```

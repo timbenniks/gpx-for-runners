@@ -77,14 +77,13 @@ You need to have node and npm installed to be able to work on this code.
 ### Installation
 `npm install`
 
-### Working with the code
-#### Tests
+### Tests
 Opens browser as it needs the DOMParser().
 
 `npm run test`
 
-#### Dev
+### Dev
 `npm run dev`
 
-#### Build
+### Build
 `npm run build`

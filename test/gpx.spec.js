@@ -14,10 +14,10 @@ describe( 'GPX', function(){
       expect( gpx.gpxContent ).to.be.a( 'string' );
     });
 
-    it( 'should have waypoints', function(){
+    it( 'should have trackpointns', function(){
       var gpx = new window.gpx( gpxContent );
-      expect( gpx.waypoints ).to.be.an( 'array' );
-      expect( gpx.waypoints ).to.have.length( 257 );
+      expect( gpx.trackpointns ).to.be.an( 'array' );
+      expect( gpx.trackpointns ).to.have.length( 257 );
     });
 
     it( 'should return an array when parsing the gpxContent (xmlDoc)', function(){

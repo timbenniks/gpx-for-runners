@@ -1,4 +1,48 @@
-/**
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/index.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/timbenniks/gpx-for-runners.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~GPX.html">GPX</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Duration">Duration</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Elevation">Elevation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Pace">Pace</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-TrackPoint">TrackPoint</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
  * GPX parser class
  * @class GPX
  */
@@ -20,13 +64,13 @@ export default class GPX{
      * The parsed gpx string into a DOM object.
      * @member GPX#xmlDoc
      */
-    this.xmlDoc = new DOMParser().parseFromString( this.gpxContent, 'application/xml' );
+    this.xmlDoc = new DOMParser().parseFromString( this.gpxContent, &apos;application/xml&apos; );
 
     /**
      * Object of all trackpointns in the gpx DOM.
      * @member GPX#trkpts
      */
-    this.trkpts = this.xmlDoc.querySelectorAll( 'trkpt' );
+    this.trkpts = this.xmlDoc.querySelectorAll( &apos;trkpt&apos; );
 
     /**
      * All trackpointns as an Array
@@ -35,7 +79,7 @@ export default class GPX{
     this.trackpointns = this.createJsonFromGpxDom();
 
     if( this.trackpointns.length === 0 ){
-      throw new Error( 'This file has no trackpointns (trkpt)' );
+      throw new Error( &apos;This file has no trackpointns (trkpt)&apos; );
     }
   }
 
@@ -55,12 +99,12 @@ export default class GPX{
   createJsonFromGpxDom(){
     let trackpointns = [];
 
-    for( let trkpt = 0; trkpt < this.trkpts.length; trkpt++ ){
+    for( let trkpt = 0; trkpt &lt; this.trkpts.length; trkpt++ ){
       trackpointns.push( {
-        lon: parseFloat( this.trkpts[ trkpt ].getAttribute( 'lon' ) ),
-        lat: parseFloat( this.trkpts[ trkpt ].getAttribute( 'lat' ) ),
-        elevation: parseFloat( this.trkpts[ trkpt ].querySelector( 'ele' ).textContent ),
-        time: this.trkpts[ trkpt ].querySelector( 'time' ).textContent
+        lon: parseFloat( this.trkpts[ trkpt ].getAttribute( &apos;lon&apos; ) ),
+        lat: parseFloat( this.trkpts[ trkpt ].getAttribute( &apos;lat&apos; ) ),
+        elevation: parseFloat( this.trkpts[ trkpt ].querySelector( &apos;ele&apos; ).textContent ),
+        time: this.trkpts[ trkpt ].querySelector( &apos;time&apos; ).textContent
       } );
     };
 
@@ -107,10 +151,10 @@ export default class GPX{
       hoursDays = parseInt( days * 24, 10 );
 
     hours += hoursDays;
-    hours = ( hours < 10 ) ? '0' + hours : hours;
-    minutes = ( minutes < 10 ) ? '0' + minutes : minutes;
-    seconds = ( seconds < 10 ) ? '0' + seconds : seconds;
-    return ( hours === '00' ) ? minutes + ':' + seconds : hours + ':' + minutes + ':' + seconds;
+    hours = ( hours &lt; 10 ) ? &apos;0&apos; + hours : hours;
+    minutes = ( minutes &lt; 10 ) ? &apos;0&apos; + minutes : minutes;
+    seconds = ( seconds &lt; 10 ) ? &apos;0&apos; + seconds : seconds;
+    return ( hours === &apos;00&apos; ) ? minutes + &apos;:&apos; + seconds : hours + &apos;:&apos; + minutes + &apos;:&apos; + seconds;
   }
 
   /**
@@ -131,8 +175,8 @@ export default class GPX{
       seconds = new Date( duration / distance ).getUTCSeconds();
 
     return {
-      minutes: ( minutes < 10 ) ? '0' + minutes : minutes,
-      seconds: ( seconds < 10 ) ? '0' + seconds : seconds
+      minutes: ( minutes &lt; 10 ) ? &apos;0&apos; + minutes : minutes,
+      seconds: ( seconds &lt; 10 ) ? &apos;0&apos; + seconds : seconds
     };
   }
 
@@ -157,18 +201,18 @@ export default class GPX{
       startTime = new Date( this.trackpointns[ 0 ].time ).getTime(),
       dist = 0;
 
-    for( let i = 0; i < this.trackpointns.length - 1; i++ ){
+    for( let i = 0; i &lt; this.trackpointns.length - 1; i++ ){
       let diff = this.trackpointns[ i + 1 ].elevation - this.trackpointns[ i ].elevation,
         time = new Date( this.trackpointns[ i + 1 ].time ).getTime(),
         timeDiff = Math.abs( time - startTime );
 
       dist += this.calcDistanceBetweenPoints( this.trackpointns[ i ], this.trackpointns[ i + 1 ] );
 
-      if( diff < 0 ){
+      if( diff &lt; 0 ){
         loss += diff;
       }
 
-      if( diff > 0 ){
+      if( diff &gt; 0 ){
         gain += diff;
       }
 
@@ -192,7 +236,7 @@ export default class GPX{
   distance(){
     let distanceInKm = 0;
 
-    for( let i = 0; i < this.trackpointns.length - 1; i++ ){
+    for( let i = 0; i &lt; this.trackpointns.length - 1; i++ ){
       distanceInKm += this.calcDistanceBetweenPoints( this.trackpointns[ i ], this.trackpointns[ i + 1 ] );
     }
 
@@ -223,3 +267,20 @@ export default class GPX{
     return h;
   }
 }
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.4)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

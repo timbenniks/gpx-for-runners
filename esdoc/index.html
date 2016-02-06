@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/timbenniks/gpx-for-runners.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/index.js~GPX.html">GPX</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Duration">Duration</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Elevation">Elevation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-Pace">Pace</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-TrackPoint">TrackPoint</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="gpx-parser-for-runners">GPX parser for runners</h1>
+<p>This is a simple GPX parser for runners who want to parse their gpx files from Nike+, Garmin connect or similar services. The parser only works with trackpoints for now.</p>
+<h2 id="how-to-use-">How to use...</h2>
+<p>The module expects a string of gpx data. It does not have a fetch feature.</p>
+<pre><code class="lang-js"><code class="source-code prettyprint">import gpx from &apos;gpx-for-runners&apos;;
+
+const gpxContent = `&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;gpx version=&quot;1.1&quot; creator=&quot;Garmin Connect&quot;
+  xsi:schemaLocation=&quot;http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd&quot;
+  xmlns=&quot;http://www.topografix.com/GPX/1/1&quot;
+  xmlns:gpxtpx=&quot;http://www.garmin.com/xmlschemas/TrackPointExtension/v1&quot;
+  xmlns:gpxx=&quot;http://www.garmin.com/xmlschemas/GpxExtensions/v3&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;
+  &lt;metadata&gt;
+    &lt;link href=&quot;connect.garmin.com&quot;&gt;
+      &lt;text&gt;Garmin Connect&lt;/text&gt;
+    &lt;/link&gt;
+    &lt;time&gt;2015-08-03T19:07:54.000Z&lt;/time&gt;
+  &lt;/metadata&gt;
+  &lt;trk&gt;
+    &lt;name&gt;Paris 14
+     Running&lt;/name&gt;
+    &lt;trkseg&gt;
+      &lt;trkpt lon=&quot;2.3212804924696684&quot; lat=&quot;48.83561119437218&quot;&gt;
+        &lt;ele&gt;73.0&lt;/ele&gt;
+        &lt;time&gt;2015-08-03T19:07:54.000Z&lt;/time&gt;
+      &lt;/trkpt&gt;
+      &lt;trkpt lon=&quot;2.3212731163948774&quot; lat=&quot;48.83561563678086&quot;&gt;
+        &lt;ele&gt;73.0&lt;/ele&gt;
+        &lt;time&gt;2015-08-03T19:07:55.000Z&lt;/time&gt;
+      &lt;/trkpt&gt;
+    &lt;/trkseg&gt;
+  &lt;/trk&gt;
+&lt;/gpx&gt;`;
+
+const gpx = new gpx( gpxContent );
+
+const distance = gpx.distance();
+// 4.87939601482932
+
+const pace = gpx.pace();
+// &quot;06:03&quot;
+
+const elevation = gpx.elevation();
+//{
+//  elevation: [{
+//    dist: 0.000731177171930792,
+//    elevation: 73,
+//    time: &quot;00:01&quot;
+// },{
+//    dist: 0.005157667126616718
+//    elevation: 73
+//    time: &quot;00:03&quot;
+//  }
+//  ...
+//  ],
+//  min: 63,
+//  max: 79.4000015258789,
+//  gain: 58.4000244140625,
+//  loss: -57.60002136230469
+//}
+
+const duration = gpx.duration();
+//{
+//  start: Mon Aug 03 2015 21:07:54 GMT+0200 (CEST) (instance of Date),
+//  end: Mon Aug 03 2015 21:37:27 GMT+0200 (CEST) (instance of Date),
+//  totalMS: 1773000,
+//  total: &quot;29:33&quot;
+//}</code>
+</code></pre>
+<h2 id="development">Development</h2>
+<p>You need to have node and npm installed to be able to work on this code.</p>
+<h3 id="installation">Installation</h3>
+<p><code>npm install</code></p>
+<h3 id="tests">Tests</h3>
+<p>Opens browser as it needs the DOMParser().</p>
+<p><code>npm run test</code></p>
+<h3 id="dev">Dev</h3>
+<p><code>npm run dev</code></p>
+<h3 id="build">Build</h3>
+<p><code>npm run build</code></p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.4)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

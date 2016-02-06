@@ -42,6 +42,7 @@ describe( 'GPX', function(){
   describe( 'duration', function(){
     it( 'should have duration', function(){
       var gpx = new window.gpx( gpxContent );
+      console.log(gpx.duration())
       expect( gpx.duration() ).to.be.an( 'object' );
     });
 

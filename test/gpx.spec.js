@@ -16,8 +16,14 @@ describe( 'GPX', function(){
 
     it( 'should have waypoints', function(){
       var gpx = new window.gpx( gpxContent );
-      expect( gpx.waypoints ).to.be.an( 'object' );
+      expect( gpx.waypoints ).to.be.an( 'array' );
       expect( gpx.waypoints ).to.have.length( 257 );
+    });
+
+    it( 'should return an array when parsing the gpxContent (xmlDoc)', function(){
+      var gpx = new window.gpx( gpxContent );
+      expect( gpx.createJsonFromGpxDom() ).to.be.an( 'array' );
+      expect( gpx.createJsonFromGpxDom() ).to.have.length( 257 );
     });
   });
 

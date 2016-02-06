@@ -3,6 +3,9 @@ This is a simple GPX parser for runners how want to parse their gpx files from N
 
 ## Functions
 * Duration
+```js
+
+```
 * Pace
 * Elevation
 * Distance

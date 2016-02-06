@@ -23,10 +23,16 @@ export default class GPX{
     this.xmlDoc = new DOMParser().parseFromString( this.gpxContent, 'application/xml' );
 
     /**
-     * Object of all waypoints in the gpx DOM.
+     * Object of all trkpts in the gpx DOM.
+     * @member GPX#trkpts
+     */
+    this.trkpts = this.xmlDoc.querySelectorAll( 'trkpt' );
+
+    /**
+     * Object of all waypoints as Array
      * @member GPX#waypoints
      */
-    this.waypoints = this.xmlDoc.querySelectorAll( 'trkpt' );
+    this.waypoints = this.createJsonFromGpxDom();
 
     if( this.waypoints.length === 0 ){
       throw new Error( 'This file has no trackpointns (trkpt)' );
@@ -34,12 +40,31 @@ export default class GPX{
   }
 
   /**
+   * Loops over xml dom and returns array of objects
+   * @return {object} lon, lat, elevation, time
+   */
+  createJsonFromGpxDom(){
+    let waypoints = [];
+
+    for( let trkpt = 0; trkpt < this.trkpts.length; trkpt++ ){
+      waypoints.push( {
+        lon: parseFloat( this.trkpts[ trkpt ].getAttribute( 'lon' ) ),
+        lat: parseFloat( this.trkpts[ trkpt ].getAttribute( 'lat' ) ),
+        elevation: parseFloat( this.trkpts[ trkpt ].querySelector( 'ele' ).textContent ),
+        time: this.trkpts[ trkpt ].querySelector( 'time' ).textContent
+      } );
+    };
+
+    return waypoints;
+  }
+
+  /**
    * Returns the duration of the run.
    * @return {object} start, end, totalMS, total
    */
   duration(){
-    let start = new Date( this.waypoints[ 0 ].querySelector( 'time' ).textContent ),
-      end = new Date( this.waypoints[ this.waypoints.length - 1 ].querySelector( 'time' ).textContent ),
+    let start = new Date( this.waypoints[ 0 ].time ),
+      end = new Date( this.waypoints[ this.waypoints.length - 1 ].time ),
       timeDiff = Math.abs( end.getTime() - start.getTime() ),
       total = this.millisecondsToTime( timeDiff );
 
@@ -88,14 +113,21 @@ export default class GPX{
 
   /**
    * Returns elevation of the run
-   * @return {object} elevation, max, min, loss, gain
+   * @return {object} elevation (time, dist, elevation), max, min, loss, gain
    */
   elevation(){
-    let elevationObject = [],
-      gain = 0, loss = 0;
+    let eleForMinMax = [],
+      richElevation = [],
+      gain = 0, loss = 0,
+      startTime = new Date( this.waypoints[ 0 ].time ).getTime(),
+      dist = 0;
 
     for( let i = 0; i < this.waypoints.length - 1; i++ ){
-      let diff = parseFloat( this.waypoints[ i + 1 ].querySelector( 'ele' ).textContent ) - parseFloat( this.waypoints[ i ].querySelector( 'ele' ).textContent );
+      let diff = this.waypoints[ i + 1 ].elevation - this.waypoints[ i ].elevation,
+        time = new Date( this.waypoints[ i + 1 ].time ).getTime(),
+        timeDiff = Math.abs( time - startTime );
+
+      dist += this.calcDistanceBetweenPoints( this.waypoints[ i ], this.waypoints[ i + 1 ] );
 
       if( diff < 0 ){
         loss += diff;
@@ -105,13 +137,14 @@ export default class GPX{
         gain += diff;
       }
 
-      elevationObject.push( parseFloat( this.waypoints[ i ].querySelector( 'ele' ).textContent ) );
+      eleForMinMax.push( this.waypoints[ i ].elevation );
+      richElevation.push( { elevation: this.waypoints[ i ].elevation, time: this.millisecondsToTime( timeDiff ), dist: dist } );
     }
 
     return {
-      elevation: elevationObject,
-      max: Math.max.apply( null, elevationObject ),
-      min: Math.min.apply( null, elevationObject ),
+      elevation: richElevation,
+      max: Math.max.apply( null, eleForMinMax ),
+      min: Math.min.apply( null, eleForMinMax ),
       loss: loss,
       gain: gain
     };
@@ -139,14 +172,14 @@ export default class GPX{
    */
   calcDistanceBetweenPoints( wp1, wp2 ){
     let point1 = {
-        lat: parseFloat( wp1.getAttribute( 'lat' ) ) * ( Math.PI / 180 ),
-        lon: parseFloat( wp1.getAttribute( 'lon' ) ) * ( Math.PI / 180 ),
-        alt: parseFloat( wp1.querySelector( 'ele' ).textContent ) / 1000
+        lat: wp1.lat * ( Math.PI / 180 ),
+        lon: wp1.lon * ( Math.PI / 180 ),
+        alt: wp1.elevation / 1000
       },
       point2 = {
-        lat: parseFloat( wp2.getAttribute( 'lat' ) ) * ( Math.PI / 180 ),
-        lon: parseFloat( wp2.getAttribute( 'lon' ) ) * ( Math.PI / 180 ),
-        alt: parseFloat( wp2.querySelector( 'ele' ).textContent ) / 1000
+        lat: wp2.lat * ( Math.PI / 180 ),
+        lon: wp2.lon * ( Math.PI / 180 ),
+        alt: wp2.elevation / 1000
       },
       dp = 2 * Math.asin( Math.sqrt( Math.pow( Math.sin( ( point1.lat - point2.lat ) / 2 ), 2 ) + Math.cos( point1.lat ) * Math.cos( point2.lat ) * Math.pow( Math.sin( ( point1.lon - point2.lon ) / 2 ), 2 ) ) ),
       d = dp * 6366,

@@ -7,14 +7,12 @@ var webpack = require( 'webpack' ),
     outputFile;
 
 if( env === 'build' ){
-  plugins.push( new UglifyJsPlugin({ minimize: true } ) );
+  plugins.push( new UglifyJsPlugin( { minimize: true } ) );
   outputFile = libraryName + '.min.js';
 }
 else {
   outputFile = libraryName + '.js';
 }
-
-plugins.push( new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en-gb /) );
 
 var config = {
   entry: __dirname + '/src/index.js',

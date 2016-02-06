@@ -1,12 +1,12 @@
 {
   "name": "gpx-for-runners",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A GPX file parser for runners.",
   "main": "lib/gpx.min.js",
   "scripts": {
     "build": "WEBPACK_ENV=build webpack",
     "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
-    "test": "npm run build;open test/index.html"
+    "test": "npm run dev;open test/index.html"
   },
   "devDependencies": {
     "babel": "6.3.13",
@@ -23,16 +23,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "<github_url>"
+    "url": "https://github.com/timbenniks/gpx-for-runners.git"
   },
   "keywords": [
-    "gpx"
+    "gpx",
+    "running",
+    "parser"
   ],
   "author": "Tim Benniks",
   "license": "MIT",
   "bugs": {
-    "url": "<github_url>/issues"
+    "url": "https://github.com/timbenniks/gpx-for-runners/issues"
   },
-  "homepage": "<github_url>",
+  "homepage": "https://github.com/timbenniks/gpx-for-runners",
   "dependencies": {}
 }

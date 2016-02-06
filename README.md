@@ -73,6 +73,15 @@ const duration = gpx.duration();
 
 ## Development
 You need to have node and npm installed to be able to work on this code.
+If you intent to add or change code you will need to re-render the esdoc.
+
+Install esdoc
+
+`npm install -g esdoc`
+
+Run esdoc
+
+`esdoc -c esdoc.json`
 
 ### Installation
 `npm install`

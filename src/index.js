@@ -23,19 +23,19 @@ export default class GPX{
     this.xmlDoc = new DOMParser().parseFromString( this.gpxContent, 'application/xml' );
 
     /**
-     * Object of all trackpointns in the gpx DOM.
+     * Object of all trackpoints in the gpx DOM.
      * @member GPX#trkpts
      */
     this.trkpts = this.xmlDoc.querySelectorAll( 'trkpt' );
 
     /**
-     * All trackpointns as an Array
-     * @member GPX#trackpointns
+     * All trackpoints as an Array
+     * @member GPX#trackpoints
      */
-    this.trackpointns = this.createJsonFromGpxDom();
+    this.trackpoints = this.createJsonFromGpxDom();
 
-    if( this.trackpointns.length === 0 ){
-      throw new Error( 'This file has no trackpointns (trkpt)' );
+    if( this.trackpoints.length === 0 ){
+      throw new Error( 'This file has no trackpoints (trkpt)' );
     }
   }
 
@@ -53,10 +53,10 @@ export default class GPX{
    * @return {TrackPoint} The trackpoint data
    */
   createJsonFromGpxDom(){
-    let trackpointns = [];
+    let trackpoints = [];
 
     for( let trkpt = 0; trkpt < this.trkpts.length; trkpt++ ){
-      trackpointns.push( {
+      trackpoints.push( {
         lon: parseFloat( this.trkpts[ trkpt ].getAttribute( 'lon' ) ),
         lat: parseFloat( this.trkpts[ trkpt ].getAttribute( 'lat' ) ),
         elevation: parseFloat( this.trkpts[ trkpt ].querySelector( 'ele' ).textContent ),
@@ -64,7 +64,7 @@ export default class GPX{
       } );
     };
 
-    return trackpointns;
+    return trackpoints;
   }
 
   /**
@@ -81,8 +81,8 @@ export default class GPX{
    * @return {Duration} The duration information of the run.
    */
   duration(){
-    let start = new Date( this.trackpointns[ 0 ].time ),
-      end = new Date( this.trackpointns[ this.trackpointns.length - 1 ].time ),
+    let start = new Date( this.trackpoints[ 0 ].time ),
+      end = new Date( this.trackpoints[ this.trackpoints.length - 1 ].time ),
       timeDiff = Math.abs( end.getTime() - start.getTime() ),
       total = this.millisecondsToTime( timeDiff );
 
@@ -154,15 +154,15 @@ export default class GPX{
     let eleForMinMax = [],
       richElevation = [],
       gain = 0, loss = 0,
-      startTime = new Date( this.trackpointns[ 0 ].time ).getTime(),
+      startTime = new Date( this.trackpoints[ 0 ].time ).getTime(),
       dist = 0;
 
-    for( let i = 0; i < this.trackpointns.length - 1; i++ ){
-      let diff = this.trackpointns[ i + 1 ].elevation - this.trackpointns[ i ].elevation,
-        time = new Date( this.trackpointns[ i + 1 ].time ).getTime(),
+    for( let i = 0; i < this.trackpoints.length - 1; i++ ){
+      let diff = this.trackpoints[ i + 1 ].elevation - this.trackpoints[ i ].elevation,
+        time = new Date( this.trackpoints[ i + 1 ].time ).getTime(),
         timeDiff = Math.abs( time - startTime );
 
-      dist += this.calcDistanceBetweenPoints( this.trackpointns[ i ], this.trackpointns[ i + 1 ] );
+      dist += this.calcDistanceBetweenPoints( this.trackpoints[ i ], this.trackpoints[ i + 1 ] );
 
       if( diff < 0 ){
         loss += diff;
@@ -172,8 +172,8 @@ export default class GPX{
         gain += diff;
       }
 
-      eleForMinMax.push( this.trackpointns[ i ].elevation );
-      richElevation.push( { elevation: this.trackpointns[ i ].elevation, time: this.millisecondsToTime( timeDiff ), dist: dist } );
+      eleForMinMax.push( this.trackpoints[ i ].elevation );
+      richElevation.push( { elevation: this.trackpoints[ i ].elevation, time: this.millisecondsToTime( timeDiff ), dist: dist } );
     }
 
     return {
@@ -192,8 +192,8 @@ export default class GPX{
   distance(){
     let distanceInKm = 0;
 
-    for( let i = 0; i < this.trackpointns.length - 1; i++ ){
-      distanceInKm += this.calcDistanceBetweenPoints( this.trackpointns[ i ], this.trackpointns[ i + 1 ] );
+    for( let i = 0; i < this.trackpoints.length - 1; i++ ){
+      distanceInKm += this.calcDistanceBetweenPoints( this.trackpoints[ i ], this.trackpoints[ i + 1 ] );
     }
 
     return distanceInKm;

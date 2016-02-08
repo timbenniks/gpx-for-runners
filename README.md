@@ -3,6 +3,7 @@ This is a simple GPX parser for runners who want to parse their gpx files from N
 
 [![Build Status](https://travis-ci.org/timbenniks/gpx-for-runners.svg?branch=master)](https://travis-ci.org/timbenniks/gpx-for-runners)
 
+See it in action here: http://timbenniks.nl/garmin-vs-nike.html
 
 ## How to use...
 The module expects a string of gpx data. It does not have a fetch feature.

@@ -396,9 +396,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/index.js~gpx#trackpointns",
-    "class/src/index.js~GPX.html#instance-member-trackpointns",
-    "src/index.js~GPX#trackpointns",
+    "src/index.js~gpx#trackpoints",
+    "class/src/index.js~GPX.html#instance-member-trackpoints",
+    "src/index.js~GPX#trackpoints",
     "member"
   ],
   [

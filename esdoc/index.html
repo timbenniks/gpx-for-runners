@@ -43,6 +43,8 @@
 
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="gpx-parser-for-runners">GPX parser for runners</h1>
 <p>This is a simple GPX parser for runners who want to parse their gpx files from Nike+, Garmin connect or similar services. The parser only works with trackpoints for now.</p>
+<p><a href="https://travis-ci.org/timbenniks/gpx-for-runners"><img src="https://travis-ci.org/timbenniks/gpx-for-runners.svg?branch=master" alt="Build Status"></a></p>
+<p>See it in action here: <a href="http://timbenniks.nl/garmin-vs-nike.html">http://timbenniks.nl/garmin-vs-nike.html</a></p>
 <h2 id="how-to-use-">How to use...</h2>
 <p>The module expects a string of gpx data. It does not have a fetch feature.</p>
 <pre><code class="lang-js"><code class="source-code prettyprint">import gpx from &apos;gpx-for-runners&apos;;
@@ -111,7 +113,12 @@ const duration = gpx.duration();
 //}</code>
 </code></pre>
 <h2 id="development">Development</h2>
-<p>You need to have node and npm installed to be able to work on this code.</p>
+<p>You need to have node and npm installed to be able to work on this code.
+If you intent to add or change code you will need to re-render the esdoc.</p>
+<p>Install esdoc</p>
+<p><code>npm install -g esdoc</code></p>
+<p>Run esdoc</p>
+<p><code>esdoc -c esdoc.json</code></p>
 <h3 id="installation">Installation</h3>
 <p><code>npm install</code></p>
 <h3 id="tests">Tests</h3>

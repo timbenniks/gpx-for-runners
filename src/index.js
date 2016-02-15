@@ -95,7 +95,7 @@ export default class GPX{
   }
 
   /**
-   * Returns humanized time for miliseconds.
+   * Returns formatted time for milliseconds.
    * @param {string} duration Duration in milliseconds
    * @return {string} Readable time
    */

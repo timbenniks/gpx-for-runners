@@ -378,6 +378,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/index.js~gpx#getaverageelevation",
+    "class/src/index.js~GPX.html#instance-method-getAverageElevation",
+    "src/index.js~GPX#getAverageElevation",
+    "method"
+  ],
+  [
     "src/index.js~gpx#gpxcontent",
     "class/src/index.js~GPX.html#instance-member-gpxContent",
     "src/index.js~GPX#gpxContent",

@@ -100,15 +100,41 @@ export default class GPX{
     let trackpoints = [];
 
     for( let trkpt = 0; trkpt &lt; this.trkpts.length; trkpt++ ){
-      trackpoints.push( {
-        lon: parseFloat( this.trkpts[ trkpt ].getAttribute( &apos;lon&apos; ) ),
-        lat: parseFloat( this.trkpts[ trkpt ].getAttribute( &apos;lat&apos; ) ),
-        elevation: parseFloat( this.trkpts[ trkpt ].querySelector( &apos;ele&apos; ).textContent ),
-        time: this.trkpts[ trkpt ].querySelector( &apos;time&apos; ).textContent
+      let point = this.trkpts[ trkpt ],
+          lon = parseFloat( point.getAttribute( &apos;lon&apos; ) ),
+          lat = parseFloat( point.getAttribute( &apos;lat&apos; ) ),
+          elevation = ( point.querySelector( &apos;ele&apos; ) ) ? point.querySelector( &apos;ele&apos; ).textContent : this.getAverageElevation(),
+          time = point.querySelector( &apos;time&apos; ).textContent;
+
+      trackpoints.push({
+        lon: lon,
+        lat: lat,
+        elevation: elevation,
+        time: time
       } );
     };
 
     return trackpoints;
+  }
+
+  /**
+   * Return average elevation for the whole gpx track.
+   * @return {Number} The average elevation
+   */
+  getAverageElevation(){
+    var elevation = 0,
+        devideBy = 0;
+
+    for( let trkpt = 0; trkpt &lt; this.trkpts.length; trkpt++ ){
+      let point = this.trkpts[ trkpt ];
+
+      if( point.querySelector( &apos;ele&apos; ) ){
+        elevation += parseFloat( point.querySelector( &apos;ele&apos; ).textContent );
+        devideBy++;
+      }
+    }
+
+    return elevation / devideBy;
   }
 
   /**

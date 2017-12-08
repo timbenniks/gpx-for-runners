@@ -1,6 +1,6 @@
 {
   "name": "gpx-for-runners",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A GPX file parser for runners.",
   "main": "lib/gpx.min.js",
   "scripts": {
@@ -36,5 +36,7 @@
     "url": "https://github.com/timbenniks/gpx-for-runners/issues"
   },
   "homepage": "https://github.com/timbenniks/gpx-for-runners",
-  "dependencies": {}
+  "dependencies": {
+    "xmldom": "0.1.27"
+  }
 }

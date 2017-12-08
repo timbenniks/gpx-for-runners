@@ -17,10 +17,22 @@ export default class GPX{
     this.gpxContent = gpxContent;
 
     /**
+     * Are we in node context?
+     * @member GPX#isNode
+     */
+    this.isNode = (typeof process !== 'undefined') && (typeof process.versions.node !== 'undefined');
+
+     /**
+     * If we are in a browser we use DOMParser ortherwise we use xmldom
+     * @member GPX#parser
+     */
+    this.parser = (!this.isNode) ? new DOMParser() : require('xmldom').DOMParser;
+
+    /**
      * The parsed gpx string into a DOM object.
      * @member GPX#xmlDoc
      */
-    this.xmlDoc = new DOMParser().parseFromString( this.gpxContent, 'application/xml' );
+    this.xmlDoc = this.parser.parseFromString( this.gpxContent, 'application/xml' );
 
     /**
      * Object of all trackpoints in the gpx DOM.

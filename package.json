@@ -6,7 +6,7 @@
   "scripts": {
     "build": "WEBPACK_ENV=build webpack",
     "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
-    "test": "npm run dev;open test/index.html"
+    "test": "npm run build;open test/index.html"
   },
   "devDependencies": {
     "babel": "6.3.13",

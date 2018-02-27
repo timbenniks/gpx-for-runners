@@ -1,6 +1,6 @@
 {
   "name": "gpx-for-runners",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A GPX file parser for runners.",
   "main": "lib/gpx.min.js",
   "scripts": {

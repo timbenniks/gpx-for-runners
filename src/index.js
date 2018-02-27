@@ -17,29 +17,28 @@ export default class GPX{
     this.gpxContent = gpxContent;
 
     /**
-     * Are we in node context?
-     * @member GPX#isNode
-     */
-    this.isNode = (typeof process !== 'undefined') && (typeof process.versions.node !== 'undefined');
-
-     /**
-     * If we are in a browser we use DOMParser ortherwise we use xmldom
-     * @member GPX#parser
-     */
-    this.parser = (!this.isNode) ? new DOMParser() : require('xmldom').DOMParser;
-
-    /**
      * The parsed gpx string into a DOM object.
      * @member GPX#xmlDoc
      */
-    this.xmlDoc = this.parser.parseFromString( this.gpxContent, 'application/xml' );
+    try {
+      this.xmlDoc = new DOMParser().parseFromString( this.gpxContent, 'application/xml' );
+    }
+    catch(e) {
+      const XMLDOMParser = require('xmldom').DOMParser;
+      this.xmlDoc = new XMLDOMParser().parseFromString( this.gpxContent, 'text/xml' );
+    }
 
     /**
      * Object of all trackpoints in the gpx DOM.
      * @member GPX#trkpts
      */
-    this.trkpts = this.xmlDoc.querySelectorAll( 'trkpt' );
-
+    try {
+      this.trkpts = this.xmlDoc.querySelectorAll( 'trkpt' );
+    }
+    catch(e) {
+      this.trkpts = this.xmlDoc.documentElement.getElementsByTagName( 'trkpt' );
+    }
+    
     /**
      * All trackpoints as an Array
      * @member GPX#trackpoints
@@ -71,8 +70,8 @@ export default class GPX{
       let point = this.trkpts[ trkpt ],
           lon = parseFloat( point.getAttribute( 'lon' ) ),
           lat = parseFloat( point.getAttribute( 'lat' ) ),
-          elevation = ( point.querySelector( 'ele' ) ) ? point.querySelector( 'ele' ).textContent : this.getAverageElevation(),
-          time = point.querySelector( 'time' ).textContent;
+          elevation = ( point.getElementsByTagName( 'ele' )[0] ) ? point.getElementsByTagName( 'ele' )[0].textContent : this.getAverageElevation(),
+          time = point.getElementsByTagName( 'time' )[0].textContent;
 
       trackpoints.push({
         lon: lon,
